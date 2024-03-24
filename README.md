@@ -234,6 +234,7 @@ ORDER BY ig.industry_group, pe.year, pe.carbon_footprint_pcf ;
 
 Convert this table into Excel to analyze which industry groups have demonstrated the most notable decrease in carbon footprints (PCFs) over time.
 Follow this sample:
-| industry_group                                                         | 2013 | 2014 | 2015 | 2016 | 2017 | 
-| ---------------------------------------------------------------------: | ---: | ---: | ---: | ---: | ---: |
+| industry_group                                        | 2013 | 2014 | 2015 | 2016 | 2017 | 
+| "Consumer Durables, Household and Personal Products": |      |      |  931 |      |      |
+|"Food, Beverage & Tobacco"                             | 4995 | 2685 |      |100289| 3162 |
 
