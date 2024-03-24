@@ -2,7 +2,7 @@
 Finish SQL module
 
 ## Wind turbines contribute the most to carbon emissions.
-Describe what did I do...
+SQL Code description:
 ```
 SELECT pe.product_name, pe.carbon_footprint_pcf
 FROM carbon_emissions.product_emissions pe 
@@ -26,7 +26,7 @@ LIMIT 10;
 
 ## The industries producing the TOP 10 products contributing the most to carbon emissions are “Electrical Equipment and Machinery”, “Automobiles & Components”, “Materials” and “Capital Goods”.
 
-Describe what did I do...
+SQL Code description:
 ```
 SELECT distinct ab.industry_group
 FROM (
@@ -48,7 +48,7 @@ LIMIT 10) as ab;
 
 ## The industry that contributes the most to carbon emissions is "Electrical Equipment and Machinery". This is because the production of electrical equipment and machinery consumes a lot of energy, including the use of furnaces, welding, machining, etc., which increases electricity consumption and carbon dioxide emissions.
 
-Describe what did I do...
+SQL Code description:
 ```
 SELECT ig.industry_group, sum(carbon_footprint_pcf) as "total_pcf"
 FROM carbon_emissions.product_emissions pe 
@@ -74,7 +74,7 @@ LIMIT 10;
 
 ## "Gamesa Corporación Tecnológica, S.A." is the largest contributor to carbon emissions in the "Electrical Equipment and Machinery" industry.
 
-Describe what did you do...
+SQL Code description:
 ```
 SELECT  ig.industry_group,c.company_name, sum(carbon_footprint_pcf) as "total_pcf"
 FROM carbon_emissions.product_emissions pe 
@@ -102,7 +102,7 @@ LIMIT 10;
 
 ## The TOP 10 countries contributing the most to carbon emissions are listed in the table below. Among them, Spain is the country with the highest carbon emissions.
 
-Describe what did I do...
+SQL Code description:
 ```
 SELECT c2.country_name , sum(carbon_footprint_pcf) as "total_pcf"
 FROM carbon_emissions.product_emissions pe 
@@ -129,7 +129,7 @@ LIMIT 10;
 ## Carbon footprints (PCFs) have gradually increased since 2013 and peaked in 2015 at 43188.90, then gradually decreased in the following years.
 ![image](https://github.com/Ng0cMy/SQL-Project-2---Carbon-Emission-Analysis/assets/162866097/2bc6e9af-b4aa-41f7-97d8-1dcf52cddb7d)
 
-Describe what did I do...
+SQL Code description:
 ```
 SELECT pe.year , ROUND(AVG(carbon_footprint_pcf),2) as "avg_carbon_footprint_pcf" 
 FROM product_emissions pe
@@ -150,7 +150,7 @@ Copy this table into Excel to create a chart, then copy the chart to GitHub.
 
 ## Industry groups have shown a clear decrease in PCF over the past 5 years, notably in media. Additionally, there has been a sharp decrease in the last 2 years in industries like ‘Food, Beverage & Tobacco’, ‘Commercial & Professional Services’, and ‘Software & Services’.
 
-Describe what did I do...
+SQL Code description:
 ```
 SELECT  ig.industry_group, pe.year , SUM(pe.carbon_footprint_pcf) as total_pcf  
 FROM product_emissions pe 
