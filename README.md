@@ -1,2 +1,2 @@
-# SQL-Project-2---Carbon-Emission-Analysis
+# SQL-Project-2-Carbon-Emission-Analysis
 Finish SQL module
