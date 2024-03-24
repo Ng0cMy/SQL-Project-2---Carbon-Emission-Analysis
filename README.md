@@ -238,4 +238,4 @@ Follow this sample:
 |-----------------------------------------------------: | ---: | ---: | ---: | ---: | ---: |
 | "Consumer Durables, Household and Personal Products": |      |      |  931 |      |      |
 |"Food, Beverage & Tobacco"                             | 4995 | 2685 |      |100289| 3162 |
-
+|.....                                                  | .... | .... | .... | .... | .... |
