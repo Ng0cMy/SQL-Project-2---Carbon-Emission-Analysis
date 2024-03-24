@@ -1,5 +1,5 @@
 # SQL-Project-2-Carbon-Emission-Analysis
-Finish SQL module
+End of SQL module
 
 ## Wind turbines contribute the most to carbon emissions.
 SQL Code description:
