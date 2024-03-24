@@ -3,61 +3,78 @@ Finish SQL module
 
 ## 1. Which products contribute the most to carbon emissions?
 
+### Wind turbines contribute the most to carbon emissions.
 ```
 SELECT pe.product_name, pe.carbon_footprint_pcf
 FROM carbon_emissions.product_emissions pe 
 ORDER BY pe.carbon_footprint_pcf desc
-LIMIT 5;
+LIMIT 10;
 ```
 
-| product_name                                                       | carbon_footprint_pcf | 
-| -----------------------------------------------------------------: | -------------------: | 
-| Wind Turbine G128 5 Megawats                                       | 3718044              | 
-| Wind Turbine G132 5 Megawats                                       | 3276187              | 
-| Wind Turbine G114 2 Megawats                                       | 1532608              | 
-| Wind Turbine G90 2 Megawats                                        | 1251625              | 
-| Land Cruiser Prado. FJ Cruiser. Dyna trucks. Toyoace.IMV def unit. | 191687               |                                      |         
+| product_name                                                                                                                       | carbon_footprint_pcf | 
+| ---------------------------------------------------------------------------------------------------------------------------------: | -------------------: | 
+| Wind Turbine G128 5 Megawats                                                                                                       | 3718044              | 
+| Wind Turbine G132 5 Megawats                                                                                                       | 3276187              | 
+| Wind Turbine G114 2 Megawats                                                                                                       | 1532608              | 
+| Wind Turbine G90 2 Megawats                                                                                                        | 1251625              | 
+| Land Cruiser Prado. FJ Cruiser. Dyna trucks. Toyoace.IMV def unit.                                                                 | 191687               | 
+| Retaining wall structure with a main wall (sheet pile): 136 tonnes of steel sheet piles and 4 tonnes of tierods per 100 meter wall | 167000               | 
+| TCDE                                                                                                                               | 99075                | 
+| TCDE                                                                                                                               | 99075                | 
+| Mercedes-Benz GLE (GLE 500 4MATIC)                                                                                                 | 91000                | 
+| Electric Motor                                                                                                                     | 87589                |                                             |         
 
-### Products contribute the most to carbon emissions are 'Wind Turbine G128 5 Megawats', 'Wind Turbine G132 5 Megawats', 'Wind Turbine G114 2 Megawats'
+
 ## 2. What are the industry groups of these products?
 
+### The industries producing the TOP 10 products contributing the most to carbon emissions are “Electrical Equipment and Machinery”, “Automobiles & Components”, “Materials” and “Capital Goods”.
+
+Describe what did I do...
 ```
-SELECT pe.product_name, ig.industry_group, pe.carbon_footprint_pcf
+SELECT distinct ab.industry_group
+FROM (
+SELECT  ig.industry_group,pe.product_name, pe.carbon_footprint_pcf
 FROM carbon_emissions.product_emissions pe 
 INNER JOIN industry_groups ig 
 	ON pe.industry_group_id =ig.id
 ORDER BY pe.carbon_footprint_pcf desc
-LIMIT 5;
+LIMIT 10) as ab;
 ```
 
-| product_name                                                       | industry_group                     | carbon_footprint_pcf | 
-| -----------------------------------------------------------------: | ---------------------------------: | -------------------: | 
-| Wind Turbine G128 5 Megawats                                       | Electrical Equipment and Machinery | 3718044              | 
-| Wind Turbine G132 5 Megawats                                       | Electrical Equipment and Machinery | 3276187              | 
-| Wind Turbine G114 2 Megawats                                       | Electrical Equipment and Machinery | 1532608              | 
-| Wind Turbine G90 2 Megawats                                        | Electrical Equipment and Machinery | 1251625              | 
-| Land Cruiser Prado. FJ Cruiser. Dyna trucks. Toyoace.IMV def unit. | Automobiles & Components           | 191687               |          
+| industry_group                     | 
+| ---------------------------------: | 
+| Electrical Equipment and Machinery | 
+| Automobiles & Components           | 
+| Materials                          | 
+| Capital Goods                      |   
+
 
 ## 3. What are the industries with the highest contribution to carbon emissions?
 
+### 
+Describe what did you do...
 ```
 SELECT ig.industry_group, sum(carbon_footprint_pcf) as "total_carbon_footprint_pcf"
 FROM carbon_emissions.product_emissions pe 
 	LEFT JOIN industry_groups ig 
 	ON pe.industry_group_id =ig.id
-WHERE pe.operations_percent_total_pcf NOT LIKE "%N/a%"
 GROUP BY ig.industry_group
 ORDER BY total_carbon_footprint_pcf desc
-LIMIT 5;
+LIMIT 10;
 ```
 
-| industry_group                  | total_carbon_footprint_pcf | 
-| ------------------------------: | -------------------------: | 
-| Automobiles & Components        | 431696                     | 
-| Capital Goods                   | 258272                     | 
-| Materials                       | 257090                     | 
-| Technology Hardware & Equipment | 103823                     | 
-| "Food, Beverage & Tobacco"      | 98971                      |                
+| industry_group                                   | total_carbon_footprint_pcf | 
+| -----------------------------------------------: | -------------------------: | 
+| Electrical Equipment and Machinery               | 9801558                    | 
+| Automobiles & Components                         | 2582264                    | 
+| Materials                                        | 577595                     | 
+| Technology Hardware & Equipment                  | 363776                     | 
+| Capital Goods                                    | 258712                     | 
+| "Food, Beverage & Tobacco"                       | 111131                     | 
+| "Pharmaceuticals, Biotechnology & Life Sciences" | 72486                      | 
+| Chemicals                                        | 62369                      | 
+| Software & Services                              | 46544                      | 
+| Media                                            | 23017                      |                       
 
 
 ## 4. What are the companies with the highest contribution to carbon emissions?
@@ -124,4 +141,6 @@ GROUP BY pe.year;
 
 ### Carbon footprints (PCFs) have gradually increased since 2013 and peaked in 2015 at 43188.90, then gradually decreased in the following years.
 
+## 7. Which industry groups has demonstrated the most notable decrease in carbon footprints (PCFs) over time?
+    
 
