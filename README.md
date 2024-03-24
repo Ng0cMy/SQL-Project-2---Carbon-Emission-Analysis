@@ -1,9 +1,8 @@
 # SQL-Project-2-Carbon-Emission-Analysis
 Finish SQL module
 
-## 1. Which products contribute the most to carbon emissions?
-
-### Wind turbines contribute the most to carbon emissions.
+## Wind turbines contribute the most to carbon emissions.
+Describe what did I do...
 ```
 SELECT pe.product_name, pe.carbon_footprint_pcf
 FROM carbon_emissions.product_emissions pe 
@@ -25,9 +24,7 @@ LIMIT 10;
 | Electric Motor                                                                                                                     | 87589                |                                             |         
 
 
-## 2. What are the industry groups of these products?
-
-### The industries producing the TOP 10 products contributing the most to carbon emissions are “Electrical Equipment and Machinery”, “Automobiles & Components”, “Materials” and “Capital Goods”.
+## The industries producing the TOP 10 products contributing the most to carbon emissions are “Electrical Equipment and Machinery”, “Automobiles & Components”, “Materials” and “Capital Goods”.
 
 Describe what did I do...
 ```
@@ -49,79 +46,90 @@ LIMIT 10) as ab;
 | Capital Goods                      |   
 
 
-## 3. What are the industries with the highest contribution to carbon emissions?
+## The industry that contributes the most to carbon emissions is "Electrical Equipment and Machinery". This is because the production of electrical equipment and machinery consumes a lot of energy, including the use of furnaces, welding, machining, etc., which increases electricity consumption and carbon dioxide emissions.
 
-### 
-Describe what did you do...
+Describe what did I do...
 ```
-SELECT ig.industry_group, sum(carbon_footprint_pcf) as "total_carbon_footprint_pcf"
+SELECT ig.industry_group, sum(carbon_footprint_pcf) as "total_pcf"
 FROM carbon_emissions.product_emissions pe 
-	LEFT JOIN industry_groups ig 
+	INNER JOIN industry_groups ig 
 	ON pe.industry_group_id =ig.id
 GROUP BY ig.industry_group
-ORDER BY total_carbon_footprint_pcf desc
+ORDER BY total_pcf desc
 LIMIT 10;
 ```
 
-| industry_group                                   | total_carbon_footprint_pcf | 
-| -----------------------------------------------: | -------------------------: | 
-| Electrical Equipment and Machinery               | 9801558                    | 
-| Automobiles & Components                         | 2582264                    | 
-| Materials                                        | 577595                     | 
-| Technology Hardware & Equipment                  | 363776                     | 
-| Capital Goods                                    | 258712                     | 
-| "Food, Beverage & Tobacco"                       | 111131                     | 
-| "Pharmaceuticals, Biotechnology & Life Sciences" | 72486                      | 
-| Chemicals                                        | 62369                      | 
-| Software & Services                              | 46544                      | 
-| Media                                            | 23017                      |                       
+| industry_group                                   | total_pcf | 
+| -----------------------------------------------: | --------: | 
+| Electrical Equipment and Machinery               | 9801558   | 
+| Automobiles & Components                         | 2582264   | 
+| Materials                                        | 577595    | 
+| Technology Hardware & Equipment                  | 363776    | 
+| Capital Goods                                    | 258712    | 
+| "Food, Beverage & Tobacco"                       | 111131    | 
+| "Pharmaceuticals, Biotechnology & Life Sciences" | 72486     | 
+| Chemicals                                        | 62369     | 
+| Software & Services                              | 46544     | 
+| Media                                            | 23017     |                
 
-
-## 4. What are the companies with the highest contribution to carbon emissions?
-
-```
-SELECT c.company_name, sum(carbon_footprint_pcf) as "total_carbon_footprint_pcf"
-FROM carbon_emissions.product_emissions pe 
-	LEFT JOIN carbon_emissions.companies c 
-	ON pe.company_id =c.id 
-WHERE pe.operations_percent_total_pcf NOT LIKE "%N/a%"
-GROUP BY c.company_name
-ORDER BY total_carbon_footprint_pcf desc
-LIMIT 5;
-```
-
-| company_name                            | total_carbon_footprint_pcf | 
-| --------------------------------------: | -------------------------: | 
-| "Mitsubishi Gas Chemical Company, Inc." | 199078                     | 
-| "Hino Motors, Ltd."                     | 191687                     | 
-| Weg S/A                                 | 160655                     | 
-| "Daikin Industries, Ltd."               | 105600                     | 
-| Volkswagen AG                           | 102601                     |      
-
-## 5. What is the trend of carbon footprints (PCFs) over the years?
+## "Gamesa Corporación Tecnológica, S.A." is the largest contributor to carbon emissions in the "Electrical Equipment and Machinery" industry.
 
 Describe what did you do...
 ```
-SELECT c2.country_name , sum(carbon_footprint_pcf) as "total_carbon_footprint_pcf"
+SELECT  ig.industry_group,c.company_name, sum(carbon_footprint_pcf) as "total_pcf"
+FROM carbon_emissions.product_emissions pe 
+	LEFT JOIN carbon_emissions.companies c 
+	ON pe.company_id =c.id
+	INNER JOIN industry_groups ig 
+	ON pe.industry_group_id =ig.id
+GROUP BY c.company_name
+ORDER BY total_pcf desc
+LIMIT 10;
+```
+
+| industry_group                     | company_name                            | total_pcf | 
+| ---------------------------------: | --------------------------------------: | --------: | 
+| Electrical Equipment and Machinery | "Gamesa Corporación Tecnológica, S.A."  | 9778464   | 
+| Automobiles & Components           | Daimler AG                              | 1594300   | 
+| Automobiles & Components           | Volkswagen AG                           | 655960    | 
+| Materials                          | "Mitsubishi Gas Chemical Company, Inc." | 212016    | 
+| Automobiles & Components           | "Hino Motors, Ltd."                     | 191687    | 
+| Materials                          | Arcelor Mittal                          | 167007    | 
+| Capital Goods                      | Weg S/A                                 | 160655    | 
+| Automobiles & Components           | General Motors Company                  | 137007    | 
+| Technology Hardware & Equipment    | "Lexmark International, Inc."           | 132012    | 
+| Capital Goods                      | "Daikin Industries, Ltd."               | 105600    |                 
+
+## The TOP 10 countries contributing the most to carbon emissions are listed in the table below. Among them, Spain is the country with the highest carbon emissions.
+
+Describe what did I do...
+```
+SELECT c2.country_name , sum(carbon_footprint_pcf) as "total_pcf"
 FROM carbon_emissions.product_emissions pe 
 	LEFT JOIN carbon_emissions.countries c2 
 	ON pe.country_id = c2.id 
 GROUP BY c2.country_name
-ORDER BY total_carbon_footprint_pcf DESC 
-LIMIT 5;
-
+ORDER BY total_pcf DESC 
+LIMIT 10;
 ```
 
-| country_name | total_carbon_footprint_pcf | 
-| -----------: | -------------------------: | 
-| Spain        | 9786130                    | 
-| Germany      | 2251225                    | 
-| Japan        | 653237                     | 
-| USA          | 518381                     | 
-| South Korea  | 186965                     |         
+| country_name | total_pcf | 
+| -----------: | --------: | 
+| Spain        | 9786130   | 
+| Germany      | 2251225   | 
+| Japan        | 653237    | 
+| USA          | 518381    | 
+| South Korea  | 186965    | 
+| Brazil       | 169337    | 
+| Luxembourg   | 167007    | 
+| Netherlands  | 70417     | 
+| Taiwan       | 62875     | 
+| India        | 24574     |                 
 
-## 6. What is the trend of carbon footprints (PCFs) over the years?
+## Carbon footprints (PCFs) have gradually increased since 2013 and peaked in 2015 at 43188.90, then gradually decreased in the following years.
+![image](https://github.com/Ng0cMy/SQL-Project-2---Carbon-Emission-Analysis/assets/162866097/2bc6e9af-b4aa-41f7-97d8-1dcf52cddb7d)
 
+Describe what did I do...
 ```
 SELECT pe.year , ROUND(AVG(carbon_footprint_pcf),2) as "avg_carbon_footprint_pcf" 
 FROM product_emissions pe
@@ -136,11 +144,96 @@ GROUP BY pe.year;
 | 2016 | 6891.52                  | 
 | 2017 | 4050.85                  |   
 
-![image](https://github.com/Ng0cMy/SQL-Project-2---Carbon-Emission-Analysis/assets/162866097/2bc6e9af-b4aa-41f7-97d8-1dcf52cddb7d)
+Copy this table into Excel to create a chart, then copy the chart to GitHub.
 
+## The industry groups with low or almost no PCF volume such as "Textiles, Apparel",  "Footwear and Luxury Goods", "Gas Utilities", "Household & Personal Products", "Retailing",  "Semiconductors & Semiconductor Equipment", "Tobacco", and "Utilities".
 
-### Carbon footprints (PCFs) have gradually increased since 2013 and peaked in 2015 at 43188.90, then gradually decreased in the following years.
+## Industry groups have shown a clear decrease in PCF over the past 5 years, notably in media. Additionally, there has been a sharp decrease in the last 2 years in industries like ‘Food, Beverage & Tobacco’, ‘Commercial & Professional Services’, and ‘Software & Services’.
 
-## 7. Which industry groups has demonstrated the most notable decrease in carbon footprints (PCFs) over time?
-    
+Describe what did I do...
+```
+SELECT  ig.industry_group, pe.year , SUM(pe.carbon_footprint_pcf) as total_pcf  
+FROM product_emissions pe 
+INNER JOIN industry_groups ig 
+ON pe.industry_group_id =ig.id 
+GROUP BY ig.industry_group, pe.year 
+ORDER BY ig.industry_group, pe.year, pe.carbon_footprint_pcf ;
+```
+
+| industry_group                                                         | year | total_pcf | 
+| ---------------------------------------------------------------------: | ---: | --------: | 
+| "Consumer Durables, Household and Personal Products"                   | 2015 | 931       | 
+| "Food, Beverage & Tobacco"                                             | 2013 | 4995      | 
+| "Food, Beverage & Tobacco"                                             | 2014 | 2685      | 
+| "Food, Beverage & Tobacco"                                             | 2015 | 0         | 
+| "Food, Beverage & Tobacco"                                             | 2016 | 100289    | 
+| "Food, Beverage & Tobacco"                                             | 2017 | 3162      | 
+| "Forest and Paper Products - Forestry, Timber, Pulp and Paper, Rubber" | 2015 | 8909      | 
+| "Mining - Iron, Aluminum, Other Metals"                                | 2015 | 8181      | 
+| "Pharmaceuticals, Biotechnology & Life Sciences"                       | 2013 | 32271     | 
+| "Pharmaceuticals, Biotechnology & Life Sciences"                       | 2014 | 40215     | 
+| "Textiles, Apparel, Footwear and Luxury Goods"                         | 2015 | 387       | 
+| Automobiles & Components                                               | 2013 | 130189    | 
+| Automobiles & Components                                               | 2014 | 230015    | 
+| Automobiles & Components                                               | 2015 | 817227    | 
+| Automobiles & Components                                               | 2016 | 1404833   | 
+| Capital Goods                                                          | 2013 | 60190     | 
+| Capital Goods                                                          | 2014 | 93699     | 
+| Capital Goods                                                          | 2015 | 3505      | 
+| Capital Goods                                                          | 2016 | 6369      | 
+| Capital Goods                                                          | 2017 | 94949     | 
+| Chemicals                                                              | 2015 | 62369     | 
+| Commercial & Professional Services                                     | 2013 | 1157      | 
+| Commercial & Professional Services                                     | 2014 | 477       | 
+| Commercial & Professional Services                                     | 2016 | 2890      | 
+| Commercial & Professional Services                                     | 2017 | 741       | 
+| Consumer Durables & Apparel                                            | 2013 | 2867      | 
+| Consumer Durables & Apparel                                            | 2014 | 3280      | 
+| Consumer Durables & Apparel                                            | 2016 | 1162      | 
+| Containers & Packaging                                                 | 2015 | 2988      | 
+| Electrical Equipment and Machinery                                     | 2015 | 9801558   | 
+| Energy                                                                 | 2013 | 750       | 
+| Energy                                                                 | 2016 | 10024     | 
+| Food & Beverage Processing                                             | 2015 | 141       | 
+| Food & Staples Retailing                                               | 2014 | 773       | 
+| Food & Staples Retailing                                               | 2015 | 706       | 
+| Food & Staples Retailing                                               | 2016 | 2         | 
+| Gas Utilities                                                          | 2015 | 122       | 
+| Household & Personal Products                                          | 2013 | 0         | 
+| Materials                                                              | 2013 | 200513    | 
+| Materials                                                              | 2014 | 75678     | 
+| Materials                                                              | 2016 | 88267     | 
+| Materials                                                              | 2017 | 213137    | 
+| Media                                                                  | 2013 | 9645      | 
+| Media                                                                  | 2014 | 9645      | 
+| Media                                                                  | 2015 | 1919      | 
+| Media                                                                  | 2016 | 1808      | 
+| Retailing                                                              | 2014 | 19        | 
+| Retailing                                                              | 2015 | 11        | 
+| Semiconductors & Semiconductor Equipment                               | 2014 | 50        | 
+| Semiconductors & Semiconductor Equipment                               | 2016 | 4         | 
+| Semiconductors & Semiconductors Equipment                              | 2015 | 3         | 
+| Software & Services                                                    | 2013 | 6         | 
+| Software & Services                                                    | 2014 | 146       | 
+| Software & Services                                                    | 2015 | 22856     | 
+| Software & Services                                                    | 2016 | 22846     | 
+| Software & Services                                                    | 2017 | 690       | 
+| Technology Hardware & Equipment                                        | 2013 | 61100     | 
+| Technology Hardware & Equipment                                        | 2014 | 167361    | 
+| Technology Hardware & Equipment                                        | 2015 | 106157    | 
+| Technology Hardware & Equipment                                        | 2016 | 1566      | 
+| Technology Hardware & Equipment                                        | 2017 | 27592     | 
+| Telecommunication Services                                             | 2013 | 52        | 
+| Telecommunication Services                                             | 2014 | 183       | 
+| Telecommunication Services                                             | 2015 | 183       | 
+| Tires                                                                  | 2015 | 2022      | 
+| Tobacco                                                                | 2015 | 1         | 
+| Trading Companies & Distributors and Commercial Services & Supplies    | 2015 | 239       | 
+| Utilities                                                              | 2013 | 122       | 
+| Utilities                                                              | 2016 | 122       |         
+
+Convert this table into Excel to analyze which industry groups have demonstrated the most notable decrease in carbon footprints (PCFs) over time.
+Follow this sample:
+| industry_group                                                         | 2013 | 2014 | 2015 | 2016 | 2017 | 
+| ---------------------------------------------------------------------: | ---: | ---: | ---: | ---: | ---: |
 
